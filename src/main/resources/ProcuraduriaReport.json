@@ -1,0 +1,55 @@
+{
+  "antecedentes":[
+    {
+      "name":"SIRI: 236203",
+      "sanciones":[
+        {
+          "sancion":"PRISION",
+          "termino":"26 AÑOS 8 MESES",
+          "clase":"PRINCIPAL",
+          "suspendida":"NO"
+        }
+      ],
+      "delitos":[
+        {
+          "descripcionDelDelito":"HOMICIDIO (DECRETO-LEY 100 DE 1980)"
+        }
+      ],
+      "instancias":[
+        {
+          "nombre":"PRIMERA",
+          "autoridad":"JUZGADO 1 PENAL DEL CIRCUITO - SANTA FE DE ANTIOQUIA",
+          "fechaProvidencia":"26/03/2001",
+          "fechaEfectoJuridicos":"03/04/2001"
+        }
+      ]
+    },
+    {
+      "name":"SIRI: 247020",
+      "sanciones":[
+        {
+          "sancion":"PRISION",
+          "termino":"28 AÑOS 4 MESES",
+          "clase":"PRINCIPAL",
+          "suspendida":"NO"
+        }
+      ],
+      "delitos":[
+        {
+          "descripcionDelDelito":"ACTO SEXUAL VIOLENTO (DECRETO-LEY 100 DE 1980)"
+        },
+        {
+          "descripcionDelDelito":"HOMICIDIO (DECRETO-LEY 100 DE 1980)"
+        }
+      ],
+      "instancias":[
+        {
+          "nombre":"PRIMERA",
+          "autoridad":"JUZGADO 2 PENAL DEL CIRCUITO - TULUA (VALLE DEL CAUCA)",
+          "fechaProvidencia":"29/03/2000",
+          "fechaEfectoJuridicos":"09/05/2000"
+        }
+      ]
+    }
+  ]
+}
