@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProcuraduriaNoReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94e997bf-0e00-40a2-b6b9-f63f5d172b8e">
+    <parameter name="date" class="java.lang.String"/>
+    <parameter name="details" class="java.lang.String"/>
+    <parameter name="warning" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <background>
+        <band height="645" splitType="Stretch">
+            <image hAlign="Center" vAlign="Middle">
+                <reportElement x="-10" y="200" width="556" height="440" uuid="dc9efbd5-77fe-474e-89a6-db102c219cd0"/>
+                <imageExpression><![CDATA["C:/Users/jamp/Downloads/MarkWater (2).png"]]></imageExpression>
+            </image>
+        </band>
+    </background>
+    <pageHeader>
+        <band height="223" splitType="Stretch">
+            <image>
+                <reportElement x="-20" y="-20" width="595" height="243" uuid="65a0bdfd-b8be-4587-a5be-3575c09571ac"/>
+                <imageExpression><![CDATA["C:/Proyecto/logos/header.png"]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="52" y="153" width="150" height="70" forecolor="#FCF7F7" uuid="50e1ca5d-d9d8-43f8-8c40-095be2006255"/>
+                <text><![CDATA[INVEXDIJIN
+Bogotá – Colombia
++57 302 259 90 90
+invexdijin@consultas.com
+www.invexdijin.com]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="355" splitType="Stretch">
+            <staticText>
+                <reportElement x="10" y="10" width="60" height="20" uuid="52c6554b-d31d-4722-b97b-db2bfe6e6397"/>
+                <text><![CDATA[Bogotá D.C, ]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="70" y="10" width="150" height="20" uuid="a20f5c3e-6422-490f-83b8-e83783edfa94"/>
+                <textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="10" y="60" width="534" height="50" uuid="f71a6e1b-0954-4e81-a959-103e9aab010a"/>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$P{details}]]></textFieldExpression>
+            </textField>
+            <rectangle>
+                <reportElement x="10" y="142" width="534" height="51" uuid="9b97d569-6599-4057-a737-6ccdf320e835"/>
+            </rectangle>
+            <rectangle>
+                <reportElement x="10" y="210" width="534" height="130" uuid="5297e8d7-8203-4be0-bed8-d446741b9adb"/>
+            </rectangle>
+            <staticText>
+                <reportElement x="10" y="141" width="534" height="52" uuid="bdd69b76-de00-49d3-b5eb-e4732ebbdb71"/>
+                <text><![CDATA[ADVERTENCIA: La certificación de antecedentes deberá contener las anotaciones de las sanciones o inhabilidades que se encuentren vigentes. Cuando se trate de nombramiento o posesión en cargos que exijan para su desempeño ausencia de antecedentes, se certificarán todas las anotaciones que figuren en el registro. (Artículo 238 Ley 1952 de 2019)
+]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="10" y="210" width="534" height="130" uuid="6999bdde-8505-4b94-8f63-bfcb4630f385"/>
+                <text><![CDATA[NOTA: El certificado de antecedentes disciplinarios es un documento que contiene las anotaciones e inhabilidades generadas por sanciones penales, disciplinarias, inhabilidades que se deriven de las relaciones contractuales con el estado, de los fallos con responsabilidad fiscal, de las decisiones de
+pérdida de investidura y de las condenas proferidas contra servidores, ex servidores públicos y particulares que desempeñen funciones públicas en ejercicio de la acción de repetición o llamamiento en garantía. Este documento tiene efectos para acceder al sector público, en los términos que
+establezca la ley o demás disposiciones vigentes. Se integran al registro de antecedentes solamente los reportes que hagan las autoridades nacionales colombianas. En caso de nombramiento o suscripción de contratos con el estado, es responsabilidad de la Entidad, validar la información que presente el aspirante en la página web: http://www.procuraduria.gov.co/portal/antecedentes.html]]></text>
+            </staticText>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="54" splitType="Stretch"/>
+    </pageFooter>
+</jasperReport>

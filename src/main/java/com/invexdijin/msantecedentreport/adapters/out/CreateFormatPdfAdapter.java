@@ -38,6 +38,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -106,7 +107,28 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         String encodedImage = Base64.getEncoder().encodeToString(reportContent);
         return "Ok";*/
 
-        JasperReport jsonReportDetail;
+        JasperReport procuraduriaNoReport;
+        File jsonFileDetail = ResourceUtils.getFile("classpath:ProcuraduriaNoReport.jrxml");
+        procuraduriaNoReport = JasperCompileManager.compileReport(jsonFileDetail.getAbsolutePath());
+
+        DateFormatSymbols sym = DateFormatSymbols.getInstance(new Locale("es","ar"));
+        sym.setMonths(new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" });
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd' de 'MMMM' del 'yyyy", sym);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+        String strDate = simpleDateFormat.format(new Date());
+        //date2.format(new Date());
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("date", strDate);
+        parameters.put("details", "Consulta en línea de Antecedentes Disciplinarios, La Procuraduria General de la Nacion certifica Que siendo las 16 horas del 02/10/2023 el Señor(a) JOHN ALEXANDER MARTINEZ PINTO identificado(a) con Cédula de ciudadanía Número 1024530679 El ciudadano no presenta antecedentes.");
+        //Fill report
+        JasperPrint jsonPrintDetail = JasperFillManager.fillReport(procuraduriaNoReport, parameters, new JREmptyDataSource());
+
+        byte[] reportContent = JasperExportManager.exportReportToPdf(jsonPrintDetail);
+        String encodedImage = Base64.getEncoder().encodeToString(reportContent);
+        return "Ok";
+
+        /*JasperReport jsonReportDetail;
         File jsonFileDetail = ResourceUtils.getFile("classpath:PoliciaReport.jrxml");
         jsonReportDetail = JasperCompileManager.compileReport(jsonFileDetail.getAbsolutePath());
 
@@ -142,7 +164,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
         byte[] reportContent = JasperExportManager.exportReportToPdf(jsonPrintDetail);
         String encodedImage = Base64.getEncoder().encodeToString(reportContent);
-        return "Ok";
+        return "Ok";*/
     }
 
 
