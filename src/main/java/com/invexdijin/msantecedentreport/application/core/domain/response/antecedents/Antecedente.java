@@ -1,4 +1,4 @@
-package com.invexdijin.msantecedentreport.application.core.domain.response.antecedentesdisciplinarios;
+package com.invexdijin.msantecedentreport.application.core.domain.response.antecedents;
 
 import lombok.Data;
 

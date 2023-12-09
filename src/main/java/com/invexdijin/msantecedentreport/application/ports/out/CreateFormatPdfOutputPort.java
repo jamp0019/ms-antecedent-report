@@ -1,15 +1,18 @@
 package com.invexdijin.msantecedentreport.application.ports.out;
 
-import com.invexdijin.msantecedentreport.application.core.domain.response.antecedentesdisciplinarios.ResponseAntecedentesDisciplinarios;
-import com.itextpdf.text.DocumentException;
+import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
 import net.sf.jasperreports.engine.JRException;
 import org.json.simple.parser.ParseException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 public interface CreateFormatPdfOutputPort {
-    String generatePdfWithJasperReport(ResponseAntecedentesDisciplinarios responseAntecedentesDisciplinarios) throws IOException, JRException, ParseException;
+    String createAttorneyOfficeNoReport(ApiResponse disciplinaryAntecedentsResponse) throws IOException, JRException, ParseException;
+
+    String createMainReport(String addresseeName, String addresseeEmail) throws FileNotFoundException, JRException;
+
+    String createAttorneyOfficeReport(ApiResponse publicSpendingWatchdogResponse) throws JRException;
+
+    String createPoliceReport(ApiResponse policeAntecedentsResponse) throws JRException;
 }

@@ -2,9 +2,7 @@ package com.invexdijin.msantecedentreport.application.core.usecase;
 
 import com.invexdijin.msantecedentreport.adapters.out.client.AntecedentReportClient;
 import com.invexdijin.msantecedentreport.application.core.domain.request.RequestAntecedentReport;
-import com.invexdijin.msantecedentreport.application.core.domain.response.antecedentesdisciplinarios.ResponseAntecedentesDisciplinarios;
-import com.invexdijin.msantecedentreport.application.core.domain.response.antecedentespoliciales.ResponseAntecedentesPoliciales;
-import com.invexdijin.msantecedentreport.application.core.domain.response.contraloria.ResponseContraloria;
+import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
 import com.invexdijin.msantecedentreport.application.ports.in.CreateAntecedentReportInputPort;
 import com.invexdijin.msantecedentreport.application.ports.out.CreateFormatPdfOutputPort;
 import com.itextpdf.text.DocumentException;
@@ -31,11 +29,14 @@ public class CreateAntecedentReportUseCase implements CreateAntecedentReportInpu
     @Override
     public String generateAntecedentReport(RequestAntecedentReport requestAntecedentReport) throws DocumentException, IOException, URISyntaxException, JRException, ParseException {
 
-        //ResponseContraloria responseContraloria = antecedentReportClient.getContraloria(token, requestAntecedentReport.getDocumentType(), requestAntecedentReport.getDocumentNumber());
-        //ResponseAntecedentesPoliciales responseAntecedentesPoliciales = antecedentReportClient.getAntececentesPoliciales(token, requestAntecedentReport.getDocumentType(), requestAntecedentReport.getDocumentNumber());
-        //ResponseAntecedentesDisciplinarios responseAntecedentesDisciplinarios = antecedentReportClient.getAntececentesDisciplinarios(token, requestAntecedentReport.getDocumentType(), requestAntecedentReport.getDocumentNumber());
-        //createFormatPdfOutputPort.generatePdfBase64(null);
-        createFormatPdfOutputPort.generatePdfWithJasperReport(null);
+        ApiResponse publicSpendingWatchdogResponse = antecedentReportClient.getInfoPublicSpendingWatchdog(token, requestAntecedentReport.getDocumentType(), requestAntecedentReport.getDocumentNumber());
+        ApiResponse attorneyOfficeResponse = antecedentReportClient.getInfoDisciplinaryAntecedents(token, requestAntecedentReport.getDocumentType(), requestAntecedentReport.getDocumentNumber());
+        ApiResponse policeAntecedentsResponse = antecedentReportClient.getInfoPoliceAntecedents(token, requestAntecedentReport.getDocumentType(), requestAntecedentReport.getDocumentNumber());
+        String base64MainResponse = createFormatPdfOutputPort.createMainReport(requestAntecedentReport.getName(),
+                requestAntecedentReport.getEmail());
+        String base64AttorneyOfficeResponse = createFormatPdfOutputPort.createAttorneyOfficeReport(attorneyOfficeResponse);
+        String base64PoliceAntecedentsResponse = createFormatPdfOutputPort.createPoliceReport(policeAntecedentsResponse);
+        String base64PublicSpendingWatchdogResponse = publicSpendingWatchdogResponse.getData().getPdfBase64();
         return "Ok";
     }
 }
