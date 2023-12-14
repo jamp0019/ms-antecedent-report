@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
 import com.invexdijin.msantecedentreport.application.ports.out.CreateFormatPdfOutputPort;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfCopy;
+import com.itextpdf.text.pdf.PdfReader;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
@@ -21,7 +25,7 @@ import java.util.*;
 public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
     @Override
-    public String createMainReport(String addresseeName, String addresseeEmail) throws FileNotFoundException, JRException {
+    public byte[] createMainReport(String addresseeName, String addresseeEmail) throws Exception {
 
         JasperReport mainJasperReport;
         try {
@@ -41,12 +45,13 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("email", addresseeEmail);
 
         JasperPrint MainJasperPrint = JasperFillManager.fillReport(mainJasperReport, parameters, new JREmptyDataSource());
-        byte[] reportContent = JasperExportManager.exportReportToPdf(MainJasperPrint);
-        return Base64.getEncoder().encodeToString(reportContent);
+
+        return JasperExportManager.exportReportToPdf(MainJasperPrint);
     }
 
+
     @Override
-    public String createAttorneyOfficeReport(ApiResponse publicSpendingWatchdogResponse) throws JRException {
+    public byte[] createAttorneyOfficeReport(ApiResponse publicSpendingWatchdogResponse) throws JRException {
         JasperReport attorneyOfficeReport;
         try {
 
@@ -69,12 +74,11 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         Map<String, Object> params = new HashMap<>();
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(attorneyOfficeReport, params, ds);
 
-        byte[] reportContent = JasperExportManager.exportReportToPdf(jsonPrintDetail);
-        return Base64.getEncoder().encodeToString(reportContent);
+        return JasperExportManager.exportReportToPdf(jsonPrintDetail);
     }
 
     @Override
-    public String createPoliceReport(ApiResponse policeAntecedentsResponse) throws JRException {
+    public byte[] createPoliceReport(ApiResponse policeAntecedentsResponse) throws JRException {
 
         JasperReport policeReport;
         try {
@@ -90,7 +94,6 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
             }
         }
 
-        //Set report data
         String[] details = policeAntecedentsResponse.getData().getDetails().split("\n");
 
         Date date = new Date();
@@ -111,12 +114,11 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
                 "instalaciones de la Policía Nacional más cercanas.");
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(policeReport, parameters, new JREmptyDataSource());
 
-        byte[] reportContent = JasperExportManager.exportReportToPdf(jsonPrintDetail);
-        return Base64.getEncoder().encodeToString(reportContent);
+        return JasperExportManager.exportReportToPdf(jsonPrintDetail);
     }
 
     @Override
-    public String createAttorneyOfficeNoReport(ApiResponse disciplinaryAntecedentsResponse) throws IOException, JRException, ParseException {
+    public byte[] createAttorneyOfficeNoReport(ApiResponse disciplinaryAntecedentsResponse) throws IOException, JRException, ParseException {
 
         JasperReport attorneyOfficeNoReport;
         try {
@@ -143,8 +145,27 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("details", "Consulta en línea de Antecedentes Disciplinarios, La Procuraduria General de la Nacion certifica Que siendo las 16 horas del 02/10/2023 el Señor(a) JOHN ALEXANDER MARTINEZ PINTO identificado(a) con Cédula de ciudadanía Número 1024530679 El ciudadano no presenta antecedentes.");
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(attorneyOfficeNoReport, parameters, new JREmptyDataSource());
 
-        byte[] reportContent = JasperExportManager.exportReportToPdf(jsonPrintDetail);
-        return Base64.getEncoder().encodeToString(reportContent);
+        return JasperExportManager.exportReportToPdf(jsonPrintDetail);
+    }
+
+    @Override
+    public String mergePdfAndReturnBase64(byte[]... pdfBytesArray) throws DocumentException, IOException {
+
+        Document document = new Document();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfCopy copy = new PdfCopy(document, outputStream);
+        document.open();
+
+        for (byte[] pdfBytes : pdfBytesArray) {
+            PdfReader reader = new PdfReader(pdfBytes);
+            copy.addDocument(reader);
+        }
+
+        document.close();
+        outputStream.close();
+
+        byte[] mergedPdfBytes = outputStream.toByteArray();
+        return Base64.getEncoder().encodeToString(mergedPdfBytes);
     }
 
 }
