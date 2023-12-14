@@ -103,8 +103,13 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         String[] fullDate = strDate.split(" ");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("details_1", details[0]);
-        parameters.put("details_2", details[1]+"\n\n"+details[3]);
+        if(details.length==1){
+            parameters.put("details_1", details[0]);
+            parameters.put("details_2", "");
+        }else{
+            parameters.put("details_1", details[0]);
+            parameters.put("details_2", details[1]+"\n\n"+details[3]);
+        }
         parameters.put("hour", fullDate[1]+" "+fullDate[2]);
         parameters.put("date", fullDate[0]);
         parameters.put("identification", policeAntecedentsResponse.getData().getDocumentNumber());

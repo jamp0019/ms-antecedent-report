@@ -1,6 +1,7 @@
 package com.invexdijin.msantecedentreport.adapters.in.controller;
 
 import com.invexdijin.msantecedentreport.application.core.domain.request.RequestAntecedentReport;
+import com.invexdijin.msantecedentreport.application.core.domain.response.ConsolidatedResponse;
 import com.invexdijin.msantecedentreport.application.ports.in.CreateAntecedentReportInputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class AntecedentReportController {
     private CreateAntecedentReportInputPort createAntecedentReportInputPort;
     @PostMapping("/report")
     public ResponseEntity<?> requestAntecedentReport(@RequestBody RequestAntecedentReport requestAntecedentReport) throws Exception {
-        String response = createAntecedentReportInputPort.generateAntecedentReport(requestAntecedentReport);
+        ConsolidatedResponse response = createAntecedentReportInputPort.generateAntecedentReport(requestAntecedentReport);
         return ResponseEntity.ok().body(response);
     }
 
