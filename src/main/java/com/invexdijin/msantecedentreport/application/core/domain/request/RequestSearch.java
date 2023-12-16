@@ -3,7 +3,7 @@ package com.invexdijin.msantecedentreport.application.core.domain.request;
 import lombok.Data;
 
 @Data
-public class RequestAntecedentReport {
+public class RequestSearch {
     private String name;
     private String email;
     private String documentType;

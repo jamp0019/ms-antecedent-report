@@ -44,11 +44,41 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("name_addressee", addresseeName);
         parameters.put("email", addresseeEmail);
 
-        JasperPrint MainJasperPrint = JasperFillManager.fillReport(mainJasperReport, parameters, new JREmptyDataSource());
+        JasperPrint mainJasperPrint = JasperFillManager.fillReport(mainJasperReport, parameters, new JREmptyDataSource());
 
-        return JasperExportManager.exportReportToPdf(MainJasperPrint);
+        return JasperExportManager.exportReportToPdf(mainJasperPrint);
     }
 
+    @Override
+    public byte[] createSearchPersonReport(ApiResponse searchPersonResponse) throws JRException {
+
+        JasperReport searchPersonJasperReport;
+        try {
+
+            searchPersonJasperReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("SearchReport.jasper"));
+        } catch (FileNotFoundException | JRException e) {
+            try {
+                File file = ResourceUtils.getFile("classpath:SearchReport.jrxml");
+                searchPersonJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+                JRSaver.saveObject(searchPersonJasperReport, "SearchReport.jasper");
+            } catch (FileNotFoundException | JRException ex) {
+                throw new RuntimeException(e);
+            }
+        }
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("documentType", searchPersonResponse.getData().getDocumentType());
+        parameters.put("documentNumber", searchPersonResponse.getData().getDocumentNumber());
+        parameters.put("fullname", searchPersonResponse.getData().getFullName());
+        parameters.put("state", "Vígente");
+        parameters.put("address", searchPersonResponse.getData().getAddress());
+        parameters.put("department", searchPersonResponse.getData().getDepartment());
+        parameters.put("municipality", searchPersonResponse.getData().getMunicipality());
+
+        JasperPrint searchPersonJasperPrint = JasperFillManager.fillReport(searchPersonJasperReport, parameters, new JREmptyDataSource());
+
+        return JasperExportManager.exportReportToPdf(searchPersonJasperPrint);
+
+    }
 
     @Override
     public byte[] createAttorneyOfficeReport(ApiResponse publicSpendingWatchdogResponse) throws JRException {

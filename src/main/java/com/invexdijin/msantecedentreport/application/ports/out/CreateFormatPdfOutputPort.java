@@ -17,5 +17,7 @@ public interface CreateFormatPdfOutputPort {
 
     byte[] createPoliceReport(ApiResponse policeAntecedentsResponse) throws JRException;
 
+    byte[] createSearchPersonReport(ApiResponse searchPersonResponse) throws JRException;
+
     String mergePdfAndReturnBase64(byte[]... pdfBytesArray) throws DocumentException, IOException;
 }

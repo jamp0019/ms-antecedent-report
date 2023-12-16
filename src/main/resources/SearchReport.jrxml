@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SearchPersonReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="57320466-493b-49a0-9030-85b3c364ef6c">
+    <parameter name="fullname" class="java.lang.String"/>
+    <parameter name="state" class="java.lang.String"/>
+    <parameter name="address" class="java.lang.String"/>
+    <parameter name="department" class="java.lang.String"/>
+    <parameter name="municipality" class="java.lang.String"/>
+    <parameter name="documentNumber" class="java.lang.String"/>
+    <parameter name="documentType" class="java.lang.String"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <pageHeader>
+        <band height="223">
+            <image>
+                <reportElement x="-20" y="-20" width="595" height="243" uuid="7671a0d2-f9dc-41fa-970c-6ba0ed7cd0f3"/>
+                <imageExpression><![CDATA["C:/Proyecto/logos/header.png"]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="52" y="153" width="150" height="70" forecolor="#FCF7F7" uuid="744e5785-926a-4421-b483-41f76a0dc12a"/>
+                <text><![CDATA[INVEXDIJIN
+Bogotá – Colombia
++57 302 259 90 90
+invexdijin@consultas.com
+www.invexdijin.com]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="469" splitType="Stretch">
+            <image>
+                <reportElement x="-10" y="0" width="555" height="449" uuid="9091cbf4-a60b-4469-956b-327072ba5c3e"/>
+                <imageExpression><![CDATA["C:/Users/jamp/Downloads/MarkWater (2).png"]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="32" y="70" width="490" height="20" uuid="e868d485-ae1a-4e2d-8560-324c088fbffe"/>
+                <textElement textAlignment="Left"/>
+                <text><![CDATA[La siguiente información obedece a la busqueda de persona:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="31" y="152" width="78" height="20" uuid="064057be-da6a-4253-958e-4b0942199160"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Nombre:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="31" y="182" width="78" height="20" uuid="8cf7c4ce-3e61-4458-af3a-dbb731ee23d1"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Estado:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="31" y="212" width="78" height="20" uuid="941e3e2a-69b0-4451-9073-d71ffc2f6779"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Arraigo:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="31" y="242" width="78" height="20" uuid="6aad03d7-8cc5-484c-9aa7-59acff989621"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Departamento:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="31" y="272" width="78" height="20" uuid="b7103948-11cd-413f-a1b5-86e4c0b0c297"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Ciudad:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="120" y="153" width="270" height="18" uuid="f8f6c13e-9ba0-43c7-b729-177601cb10d9"/>
+                <textFieldExpression><![CDATA[$P{fullname}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="120" y="183" width="270" height="18" uuid="8631d93b-b111-419e-a800-2d1857d06e8b"/>
+                <textFieldExpression><![CDATA[$P{state}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="120" y="213" width="270" height="18" uuid="73ea475d-e0cd-42e0-b8c7-4427e2f61a68"/>
+                <textFieldExpression><![CDATA[$P{address}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="120" y="243" width="270" height="18" uuid="d0d42b45-4a68-4455-a6ad-efc780cfbaf1"/>
+                <textFieldExpression><![CDATA[$P{department}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="120" y="273" width="270" height="18" uuid="87876a6f-79ab-4c15-aa11-530d9606d19c"/>
+                <textFieldExpression><![CDATA[$P{municipality}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="30" y="123" width="78" height="20" uuid="4bfb3136-d1a0-46a7-9159-7d743c4d8295"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[No Documento:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="120" y="124" width="270" height="18" uuid="b7ea862f-61ff-4e77-8fba-756d308ced52"/>
+                <textFieldExpression><![CDATA[$P{documentNumber}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="31" y="93" width="88" height="20" uuid="709110f8-5b6f-4c76-a2ae-b2d24f4c1307"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[Tipo Documento:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="121" y="94" width="270" height="18" uuid="16a1cf72-65fa-4a56-9e27-4e2f2c86e3df"/>
+                <textFieldExpression><![CDATA[$P{documentType}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="54" splitType="Stretch"/>
+    </pageFooter>
+</jasperReport>
