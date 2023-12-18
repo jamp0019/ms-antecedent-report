@@ -16,15 +16,15 @@ public class AntecedentReportController {
 
     @Autowired
     private CreateReportInputPort createReportInputPort;
-    @PostMapping("/antecedent-report")
-    public ResponseEntity<?> requestAntecedentReport(@RequestBody RequestSearch requestSearch) throws Exception {
-        ConsolidatedResponse response = createReportInputPort.generateAntecedentReport(requestSearch);
-        return ResponseEntity.ok().body(response);
-    }
 
     @PostMapping("/search-person-report")
     public ResponseEntity<?> requestSearchPerson(@RequestBody RequestSearch requestSearch) throws Exception {
         ConsolidatedResponse response = createReportInputPort.generateSearchPersonReport(requestSearch);
+        return ResponseEntity.ok().body(response);
+    }
+    @PostMapping("/antecedent-report")
+    public ResponseEntity<?> requestAntecedentReport(@RequestBody RequestSearch requestSearch) throws Exception {
+        ConsolidatedResponse response = createReportInputPort.generateAntecedentReport(requestSearch);
         return ResponseEntity.ok().body(response);
     }
 

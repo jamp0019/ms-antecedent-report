@@ -1,5 +1,6 @@
 package com.invexdijin.msantecedentreport.application.core.domain.response;
 
+import com.invexdijin.msantecedentreport.application.core.domain.response.searchperson.Geometry;
 import lombok.Data;
 @Data
 public class ConsolidatedResponse {
@@ -14,6 +15,7 @@ public class ConsolidatedResponse {
     private String address;
     private String department;
     private String municipality;
+    private Geometry geometry;
     public ConsolidatedResponse(){
         this.state="Vígente";
     }
