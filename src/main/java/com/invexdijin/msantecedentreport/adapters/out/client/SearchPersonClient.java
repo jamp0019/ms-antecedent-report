@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value = "search-person",
-        url = "https://fad475a9-af39-4b22-b51d-e83540dea461.mock.pstmn.io")
+        url = "https://api.verifik.co")
 public interface SearchPersonClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/contraloriaNotFound")
+    @RequestMapping(method = RequestMethod.GET, value = "/v2/co/registraduria/votacion")
     ApiResponse getInfoPersonVoting(@RequestHeader("Authorization") String bearerToken,
                                               @RequestParam("documentType") String documentType,
                                               @RequestParam("documentNumber") String documentNumber);

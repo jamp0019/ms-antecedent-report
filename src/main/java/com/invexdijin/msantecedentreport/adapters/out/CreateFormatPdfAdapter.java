@@ -1,6 +1,7 @@
 package com.invexdijin.msantecedentreport.adapters.out;
 
 import com.google.gson.Gson;
+import com.invexdijin.msantecedentreport.application.core.domain.request.RequestSearch;
 import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
 import com.invexdijin.msantecedentreport.application.ports.out.CreateFormatPdfOutputPort;
 
@@ -49,7 +50,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
     }
 
     @Override
-    public byte[] createSearchPersonReport(ApiResponse searchPersonResponse) throws JRException {
+    public byte[] createSearchPersonReport(ApiResponse searchPersonResponse, RequestSearch requestSearch) throws JRException {
 
         JasperReport searchPersonJasperReport;
         try {
@@ -67,7 +68,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("documentType", searchPersonResponse.getData().getDocumentType());
         parameters.put("documentNumber", searchPersonResponse.getData().getDocumentNumber());
-        parameters.put("fullname", searchPersonResponse.getData().getFullName());
+        parameters.put("fullname", requestSearch.getSearchFullName());
         parameters.put("state", "Vígente");
         parameters.put("address", searchPersonResponse.getData().getAddress());
         parameters.put("department", searchPersonResponse.getData().getDepartment());
@@ -134,7 +135,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         Map<String, Object> parameters = new HashMap<>();
         if(details.length==1){
             parameters.put("details_1", details[0]);
-            parameters.put("details_2", "");
+            parameters.put("details_2", " ");
         }else{
             parameters.put("details_1", details[0]);
             parameters.put("details_2", details[1]+"\n\n"+details[3]);

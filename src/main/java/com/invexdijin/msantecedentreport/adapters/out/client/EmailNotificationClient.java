@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(value = "email",
         url = "http://localhost:8081")
 public interface EmailNotificationClient {
-    @RequestMapping(method = RequestMethod.POST, value = "/v1/email/pdf")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/v1/invexdijin/pdf")
     ApiResponse sendPdfByEmail(@RequestBody RequestPdfEmail requestPdfEmail);
 }

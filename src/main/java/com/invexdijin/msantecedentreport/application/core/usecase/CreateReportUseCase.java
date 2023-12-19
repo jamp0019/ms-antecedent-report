@@ -55,7 +55,7 @@ public class CreateReportUseCase implements CreateReportInputPort {
             ApiResponse attorneyOfficeResponse = antecedentReportClient.getInfoDisciplinaryAntecedents(verifikToken, requestSearch.getDocumentType(), requestSearch.getDocumentNumber());
             ApiResponse policeAntecedentsResponse = antecedentReportClient.getInfoPoliceAntecedents(verifikToken, requestSearch.getDocumentType(), requestSearch.getDocumentNumber());
 
-            byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getName(), requestSearch.getEmail());
+            byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getPaymentName(), requestSearch.getPaymentEmail());
             byte[] bytesAttorneyOfficeResponse;
             if(attorneyOfficeResponse.getData().isRequired()){
                 bytesAttorneyOfficeResponse = createFormatPdfOutputPort.createAttorneyOfficeReport(attorneyOfficeResponse);
@@ -71,9 +71,9 @@ public class CreateReportUseCase implements CreateReportInputPort {
                     bytesAttorneyOfficeResponse,
                     bytesPoliceAntecedentsResponse,
                     base64Decoder);
-            RequestPdfEmail requestPdfEmail = createUtilOutputPort.createRequestPdfEmail(requestSearch.getName(),requestSearch.getEmail(), consolidatedBase64Report);
-            //emailNotificationClient.sendPdfByEmail(requestPdfEmail);
-            consolidatedResponse = createUtilOutputPort.createConsolidatedResponse(policeAntecedentsResponse);
+            RequestPdfEmail requestPdfEmail = createUtilOutputPort.createRequestPdfEmail(requestSearch.getPaymentName(),requestSearch.getPaymentEmail(), consolidatedBase64Report);
+            emailNotificationClient.sendPdfByEmail(requestPdfEmail);
+            consolidatedResponse = createUtilOutputPort.createConsolidatedResponse(policeAntecedentsResponse, requestSearch);
             consolidatedResponse.setAttorneyOfficeLegend(attorneyOfficeResponse.getData().getLegend());
             consolidatedResponse.setPoliceDetail(policeAntecedentsResponse.getData().getDetails());
             consolidatedResponse.setPublicSpendingWatchdogMessage("La contraloría delegada para responsabilidad fiscal, intervención judicial y cobro coactivo. Ver detalle en pdf adjunto.");
@@ -90,14 +90,13 @@ public class CreateReportUseCase implements CreateReportInputPort {
         try {
             ApiResponse personVotingResponse = searchPersonClient.getInfoPersonVoting(verifikToken, requestSearch.getDocumentType(), requestSearch.getDocumentNumber());
             personVotingResponse.getData().setDocumentType(requestSearch.getDocumentType());
-            byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getName(), requestSearch.getEmail());
-            byte[] bytesPersonVotingResponse = createFormatPdfOutputPort.createSearchPersonReport(personVotingResponse);
+            //byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getPaymentName(), requestSearch.getPaymentEmail());
+            byte[] bytesPersonVotingResponse = createFormatPdfOutputPort.createSearchPersonReport(personVotingResponse, requestSearch);
             String consolidatedBase64Report = createFormatPdfOutputPort.mergePdfAndReturnBase64(
-                    bytesMainResponse,
                     bytesPersonVotingResponse);
-            RequestPdfEmail requestPdfEmail = createUtilOutputPort.createRequestPdfEmail(requestSearch.getName(),requestSearch.getEmail(), consolidatedBase64Report);
-            //emailNotificationClient.sendPdfByEmail(requestPdfEmail);
-            consolidatedResponse = createUtilOutputPort.createConsolidatedResponse(personVotingResponse);
+            RequestPdfEmail requestPdfEmail = createUtilOutputPort.createRequestPdfEmail(requestSearch.getPaymentName(),requestSearch.getPaymentEmail(), consolidatedBase64Report);
+            emailNotificationClient.sendPdfByEmail(requestPdfEmail);
+            consolidatedResponse = createUtilOutputPort.createConsolidatedResponse(personVotingResponse, requestSearch);
             MapResponse mapResponse = mapClient.getGeometry(personVotingResponse.getData().getAddress()
                             .concat(",").concat(personVotingResponse.getData().getDepartment())
                             .concat(",").concat(personVotingResponse.getData().getMunicipality()),

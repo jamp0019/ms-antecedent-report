@@ -7,4 +7,5 @@ public interface CreateReportInputPort {
 
     ConsolidatedResponse generateAntecedentReport(RequestSearch requestSearch) throws Exception;
     ConsolidatedResponse generateSearchPersonReport(RequestSearch requestSearch) throws Exception;
+
 }

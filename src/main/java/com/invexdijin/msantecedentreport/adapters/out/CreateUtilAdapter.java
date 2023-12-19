@@ -1,6 +1,7 @@
 package com.invexdijin.msantecedentreport.adapters.out;
 
 import com.invexdijin.msantecedentreport.application.core.domain.request.RequestPdfEmail;
+import com.invexdijin.msantecedentreport.application.core.domain.request.RequestSearch;
 import com.invexdijin.msantecedentreport.application.core.domain.response.ConsolidatedResponse;
 import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
 import com.invexdijin.msantecedentreport.application.ports.out.CreateUtilOutputPort;
@@ -18,10 +19,10 @@ public class CreateUtilAdapter implements CreateUtilOutputPort {
     }
 
     @Override
-    public ConsolidatedResponse createConsolidatedResponse(ApiResponse apiResponse) {
+    public ConsolidatedResponse createConsolidatedResponse(ApiResponse apiResponse, RequestSearch requestSearch) {
         ConsolidatedResponse consolidatedResponse = new ConsolidatedResponse();
-        consolidatedResponse.setFullName(apiResponse.getData().getFullName());
-        consolidatedResponse.setFirstName(apiResponse.getData().getFirstName());
+        consolidatedResponse.setFullName(requestSearch.getSearchFullName());
+        consolidatedResponse.setFirstName(requestSearch.getSearchName());
         consolidatedResponse.setDocumentType(apiResponse.getData().getDocumentType());
         consolidatedResponse.setDocumentNumber(apiResponse.getData().getDocumentNumber());
         return consolidatedResponse;

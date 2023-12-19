@@ -17,14 +17,11 @@ import java.util.Map;
 @Slf4j
 public class HandlerException {
 
-    @Autowired
-    private HashMap<String, Object> responseMap;
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
-
+        Map<String, Object> responseMap = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
