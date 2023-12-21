@@ -23,6 +23,7 @@ public class CreateUtilAdapter implements CreateUtilOutputPort {
         ConsolidatedResponse consolidatedResponse = new ConsolidatedResponse();
         consolidatedResponse.setFullName(requestSearch.getSearchFullName());
         consolidatedResponse.setFirstName(requestSearch.getSearchName());
+        consolidatedResponse.setLastName(requestSearch.getSearchLastName());
         consolidatedResponse.setDocumentType(apiResponse.getData().getDocumentType());
         consolidatedResponse.setDocumentNumber(apiResponse.getData().getDocumentNumber());
         return consolidatedResponse;

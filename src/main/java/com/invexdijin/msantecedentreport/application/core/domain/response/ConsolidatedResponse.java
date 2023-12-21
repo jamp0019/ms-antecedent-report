@@ -6,6 +6,7 @@ import lombok.Data;
 public class ConsolidatedResponse {
     private String fullName;
     private String firstName;
+    private String lastName;
     private String state;
     private String documentNumber;
     private String documentType;
