@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-antecedent-report
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-antecedent-report
+  template:
+    metadata:
+      labels:
+        app: ms-antecedent-report
+    spec:
+      containers:
+        - name: ms-antecedent-report
+          image: docker.io/jamp1992/ms-antecedent-report:v2
+          env:
+            - name: TOKEN_VERIFIK
+              value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0NTkwMzM0MWYzMTBiZGY4ZTU4NGI0ZCIsInYiOjIsInJvbGUiOiJjbGllbnQiLCJKV1RQaHJhc2UiOiI2NDU5MDMzMjIyNGU0MmRmYjA2NzlmZGUiLCJleHBpcmVzQXQiOiIyMDI0LTAxLTE4IDIwOjE4OjU5IiwiaWF0IjoxNzAzMDE3MTM5fQ.17hmEm09DV3j15sXalSxkDs8g4KftnoVcDwvRVz0ai8
+            - name: CLIENT_GOOGLE_MAPS_URL
+              value: https://maps.googleapis.com/maps/api/geocode/json
+            - name: CLIENT_GOOGLE_MAPS_KEY
+              value: AIzaSyBbCaPJDJSPN8Zon_cciGrw_RhkgCGYHr4
+          readinessProbe:
+            failureThreshold: 10
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            httpGet:
+              httpHeaders:
+                - name: Accept
+                  value: application/json
+              path: /actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+#          imagePullPolicy: Always
+#          ports:
+#            - containerPort: 8080
+#              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-antecedent-report
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-antecedent-report
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080

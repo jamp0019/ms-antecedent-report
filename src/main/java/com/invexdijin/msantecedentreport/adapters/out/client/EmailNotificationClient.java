@@ -5,6 +5,8 @@ import com.invexdijin.msantecedentreport.application.core.domain.response.antece
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
+/*@FeignClient(value = "email",
+        url = "http://email-notification:80")*/
 @FeignClient(value = "email",
         url = "http://localhost:8085")
 public interface EmailNotificationClient {

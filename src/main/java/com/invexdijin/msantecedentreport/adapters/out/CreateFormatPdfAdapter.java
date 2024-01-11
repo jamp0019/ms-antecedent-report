@@ -9,6 +9,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
+@Slf4j
 public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
     @Override
@@ -32,11 +34,15 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
             mainJasperReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("MainReport.jasper"));
         } catch (FileNotFoundException | JRException e) {
+            log.error("MainReport.jasper no exist!!!");
             try {
+                log.info("Creating MainReport.jasper");
                 File file = ResourceUtils.getFile("classpath:MainReport.jrxml");
                 mainJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
                 JRSaver.saveObject(mainJasperReport, "MainReport.jasper");
+                log.info("Creation success!!!");
             } catch (FileNotFoundException | JRException ex) {
+                log.error("No can't open or create MainReport.jasper");
                 throw new RuntimeException(e);
             }
         }
