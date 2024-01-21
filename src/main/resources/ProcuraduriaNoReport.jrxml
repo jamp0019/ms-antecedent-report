@@ -11,7 +11,7 @@
         <band height="645" splitType="Stretch">
             <image hAlign="Center" vAlign="Middle">
                 <reportElement x="-10" y="200" width="556" height="440" uuid="dc9efbd5-77fe-474e-89a6-db102c219cd0"/>
-                <imageExpression><![CDATA["C:/Users/jamp/Downloads/MarkWater (2).png"]]></imageExpression>
+                <imageExpression><![CDATA[getClass().getResource("/img/MarkWater.png")]]></imageExpression>
             </image>
         </band>
     </background>
@@ -19,7 +19,7 @@
         <band height="223" splitType="Stretch">
             <image>
                 <reportElement x="-20" y="-20" width="595" height="243" uuid="65a0bdfd-b8be-4587-a5be-3575c09571ac"/>
-                <imageExpression><![CDATA["C:/Proyecto/logos/header.png"]]></imageExpression>
+                <imageExpression><![CDATA[getClass().getResource("/img/header.png")]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="52" y="153" width="150" height="70" forecolor="#FCF7F7" uuid="50e1ca5d-d9d8-43f8-8c40-095be2006255"/>

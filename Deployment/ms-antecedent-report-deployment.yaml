@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: ms-antecedent-report
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: ms-antecedent-report
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ms-antecedent-report
-          image: docker.io/jamp1992/ms-antecedent-report:v2
+          image: docker.io/jamp1992/ms-antecedent-report:v3
           env:
             - name: TOKEN_VERIFIK
               value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0NTkwMzM0MWYzMTBiZGY4ZTU4NGI0ZCIsInYiOjIsInJvbGUiOiJjbGllbnQiLCJKV1RQaHJhc2UiOiI2NDU5MDMzMjIyNGU0MmRmYjA2NzlmZGUiLCJleHBpcmVzQXQiOiIyMDI0LTAxLTE4IDIwOjE4OjU5IiwiaWF0IjoxNzAzMDE3MTM5fQ.17hmEm09DV3j15sXalSxkDs8g4KftnoVcDwvRVz0ai8
@@ -47,6 +47,20 @@ metadata:
   name: ms-antecedent-report
 spec:
   type: ClusterIP
+  selector:
+    app: ms-antecedent-report
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-antecedent-report-external
+spec:
+  type: LoadBalancer
   selector:
     app: ms-antecedent-report
   ports:

@@ -18,7 +18,7 @@
         <band height="223">
             <image>
                 <reportElement x="-20" y="-20" width="595" height="243" uuid="7671a0d2-f9dc-41fa-970c-6ba0ed7cd0f3"/>
-                <imageExpression><![CDATA["C:/Proyecto/logos/header.png"]]></imageExpression>
+                <imageExpression><![CDATA[getClass().getResource("/img/header.png")]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="52" y="153" width="150" height="70" forecolor="#FCF7F7" uuid="744e5785-926a-4421-b483-41f76a0dc12a"/>
@@ -34,7 +34,7 @@ www.invexdijin.com]]></text>
         <band height="469" splitType="Stretch">
             <image>
                 <reportElement x="-10" y="0" width="555" height="449" uuid="9091cbf4-a60b-4469-956b-327072ba5c3e"/>
-                <imageExpression><![CDATA["C:/Users/jamp/Downloads/MarkWater (2).png"]]></imageExpression>
+                <imageExpression><![CDATA[getClass().getResource("/img/MarkWater.png")]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="32" y="70" width="490" height="20" uuid="e868d485-ae1a-4e2d-8560-324c088fbffe"/>

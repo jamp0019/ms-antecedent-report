@@ -77,6 +77,7 @@ public class CreateReportUseCase implements CreateReportInputPort {
             consolidatedResponse.setAttorneyOfficeLegend(attorneyOfficeResponse.getData().getLegend());
             consolidatedResponse.setPoliceDetail(policeAntecedentsResponse.getData().getDetails());
             consolidatedResponse.setPublicSpendingWatchdogMessage("La contraloría delegada para responsabilidad fiscal, intervención judicial y cobro coactivo. Ver detalle en pdf adjunto.");
+            //log.info("Generated PDF --> "+consolidatedBase64Report);
         } catch (Exception ex){
             log.error("Failed connection person voting service or sent email");
             throw new InternalServerError(ex.getMessage());
@@ -90,9 +91,10 @@ public class CreateReportUseCase implements CreateReportInputPort {
         try {
             ApiResponse personVotingResponse = searchPersonClient.getInfoPersonVoting(verifikToken, requestSearch.getDocumentType(), requestSearch.getDocumentNumber());
             personVotingResponse.getData().setDocumentType(requestSearch.getDocumentType());
-            //byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getPaymentName(), requestSearch.getPaymentEmail());
+            byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getPaymentName(), requestSearch.getPaymentEmail());
             byte[] bytesPersonVotingResponse = createFormatPdfOutputPort.createSearchPersonReport(personVotingResponse, requestSearch);
             String consolidatedBase64Report = createFormatPdfOutputPort.mergePdfAndReturnBase64(
+                    bytesMainResponse,
                     bytesPersonVotingResponse);
             RequestPdfEmail requestPdfEmail = createUtilOutputPort.createRequestPdfEmail(requestSearch.getPaymentName(),requestSearch.getPaymentEmail(), consolidatedBase64Report);
             emailNotificationClient.sendPdfByEmail(requestPdfEmail);

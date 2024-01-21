@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.util.JRSaver;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 import java.io.*;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -29,29 +26,53 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
     @Override
     public byte[] createMainReport(String addresseeName, String addresseeEmail) throws Exception {
 
-        JasperReport mainJasperReport;
-        try {
+        /*try {
+            log.info("Creating PoliciaReport.jasper");
+            File file = ResourceUtils.getFile("classpath:PoliciaReport.jrxml");
+            mainJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+            JRSaver.saveObject(mainJasperReport, "PoliciaReport.jasper");
+            log.info("Creation success!!!");
 
-            mainJasperReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("MainReport.jasper"));
-        } catch (FileNotFoundException | JRException e) {
+            log.info("Creating ProcuraduriaNoReport.jrxml");
+            File file1 = ResourceUtils.getFile("classpath:ProcuraduriaNoReport.jrxml");
+            mainJasperReport = JasperCompileManager.compileReport(file1.getAbsolutePath());
+            JRSaver.saveObject(mainJasperReport, "ProcuraduriaNoReport.jasper");
+            log.info("Creation success!!!");
+
+            log.info("Creating ProcuraduriaReport.jrxml");
+            File file2 = ResourceUtils.getFile("classpath:ProcuraduriaReport.jrxml");
+            mainJasperReport = JasperCompileManager.compileReport(file2.getAbsolutePath());
+            JRSaver.saveObject(mainJasperReport, "ProcuraduriaReport.jasper");
+            log.info("Creation success!!!");
+
+            log.info("Creating SearchReport.jrxml");
+            File file3 = ResourceUtils.getFile("classpath:SearchReport.jrxml");
+            mainJasperReport = JasperCompileManager.compileReport(file3.getAbsolutePath());
+            JRSaver.saveObject(mainJasperReport, "SearchReport.jasper");
+            log.info("Creation success!!!");
+
+            mainJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/MainReport.jasper")));
+        } catch (JRException e) {
             log.error("MainReport.jasper no exist!!!");
             try {
                 log.info("Creating MainReport.jasper");
                 File file = ResourceUtils.getFile("classpath:MainReport.jrxml");
                 mainJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-                JRSaver.saveObject(mainJasperReport, "MainReport.jasper");
+                JRSaver.saveObject(mainJasperReport, "jasper/MainReport.jasper");
                 log.info("Creation success!!!");
             } catch (FileNotFoundException | JRException ex) {
                 log.error("No can't open or create MainReport.jasper");
                 throw new RuntimeException(e);
             }
-        }
+        }*/
+        JasperReport mainJasperReport;
+        mainJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/MainReport.jasper")));
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name_addressee", addresseeName);
         parameters.put("email", addresseeEmail);
 
         JasperPrint mainJasperPrint = JasperFillManager.fillReport(mainJasperReport, parameters, new JREmptyDataSource());
-
+        log.info("Jasper report main has been created successful");
         return JasperExportManager.exportReportToPdf(mainJasperPrint);
     }
 
@@ -59,18 +80,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
     public byte[] createSearchPersonReport(ApiResponse searchPersonResponse, RequestSearch requestSearch) throws JRException {
 
         JasperReport searchPersonJasperReport;
-        try {
-
-            searchPersonJasperReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("SearchReport.jasper"));
-        } catch (FileNotFoundException | JRException e) {
-            try {
-                File file = ResourceUtils.getFile("classpath:SearchReport.jrxml");
-                searchPersonJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-                JRSaver.saveObject(searchPersonJasperReport, "SearchReport.jasper");
-            } catch (FileNotFoundException | JRException ex) {
-                throw new RuntimeException(e);
-            }
-        }
+        searchPersonJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/SearchReport.jasper")));
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("documentType", searchPersonResponse.getData().getDocumentType());
         parameters.put("documentNumber", searchPersonResponse.getData().getDocumentNumber());
@@ -81,26 +91,16 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("municipality", searchPersonResponse.getData().getMunicipality());
 
         JasperPrint searchPersonJasperPrint = JasperFillManager.fillReport(searchPersonJasperReport, parameters, new JREmptyDataSource());
-
+        log.info("Search person jasper report has been created successful");
         return JasperExportManager.exportReportToPdf(searchPersonJasperPrint);
 
     }
 
     @Override
     public byte[] createAttorneyOfficeReport(ApiResponse publicSpendingWatchdogResponse) throws JRException {
-        JasperReport attorneyOfficeReport;
-        try {
 
-            attorneyOfficeReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("ProcuraduriaReport.jasper"));
-        } catch (FileNotFoundException | JRException e) {
-            try {
-                File file = ResourceUtils.getFile("classpath:ProcuraduriaReport.jrxml");
-                attorneyOfficeReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-                JRSaver.saveObject(attorneyOfficeReport, "ProcuraduriaReport.jasper");
-            } catch (FileNotFoundException | JRException ex) {
-                throw new RuntimeException(e);
-            }
-        }
+        JasperReport attorneyOfficeReport;
+        attorneyOfficeReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/ProcuraduriaReport.jasper")));
         Gson gson = new Gson();
         String jsonArray = gson.toJson(publicSpendingWatchdogResponse.getData().getAntecedentes());
 
@@ -109,7 +109,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
         Map<String, Object> params = new HashMap<>();
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(attorneyOfficeReport, params, ds);
-
+        log.info("Procuraduria jasper report has been created successful");
         return JasperExportManager.exportReportToPdf(jsonPrintDetail);
     }
 
@@ -117,19 +117,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
     public byte[] createPoliceReport(ApiResponse policeAntecedentsResponse) throws JRException {
 
         JasperReport policeReport;
-        try {
-
-            policeReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("PoliciaReport.jasper"));
-        } catch (FileNotFoundException | JRException e) {
-            try {
-                File file = ResourceUtils.getFile("classpath:PoliciaReport.jrxml");
-                policeReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-                JRSaver.saveObject(policeReport, "PoliciaReport.jasper");
-            } catch (FileNotFoundException | JRException ex) {
-                throw new RuntimeException(e);
-            }
-        }
-
+        policeReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/PoliciaReport.jasper")));
         String[] details = policeAntecedentsResponse.getData().getDetails().split("\n");
 
         Date date = new Date();
@@ -154,26 +142,15 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("details_4","Si tiene alguna duda con el resultado, consulte las preguntas frecuentes o acérquese a las\n" +
                 "instalaciones de la Policía Nacional más cercanas.");
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(policeReport, parameters, new JREmptyDataSource());
-
+        log.info("Police jasper report has been created successful");
         return JasperExportManager.exportReportToPdf(jsonPrintDetail);
     }
 
     @Override
-    public byte[] createAttorneyOfficeNoReport(ApiResponse disciplinaryAntecedentsResponse) throws IOException, JRException, ParseException {
+    public byte[] createAttorneyOfficeNoReport(ApiResponse disciplinaryAntecedentsResponse) throws JRException {
 
         JasperReport attorneyOfficeNoReport;
-        try {
-
-            attorneyOfficeNoReport = (JasperReport) JRLoader.loadObject(ResourceUtils.getFile("ProcuraduriaNoReport.jasper"));
-        } catch (FileNotFoundException | JRException e) {
-            try {
-                File file = ResourceUtils.getFile("classpath:ProcuraduriaNoReport.jrxml");
-                attorneyOfficeNoReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-                JRSaver.saveObject(attorneyOfficeNoReport, "ProcuraduriaNoReport.jasper");
-            } catch (FileNotFoundException | JRException ex) {
-                throw new RuntimeException(e);
-            }
-        }
+        attorneyOfficeNoReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/ProcuraduriaNoReport.jasper")));
 
         DateFormatSymbols sym = DateFormatSymbols.getInstance(new Locale("es","ar"));
         sym.setMonths(new String[]{"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" });
@@ -185,7 +162,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("date", strDate);
         parameters.put("details", "Consulta en línea de Antecedentes Disciplinarios, La Procuraduria General de la Nacion certifica Que siendo las 16 horas del 02/10/2023 el Señor(a) JOHN ALEXANDER MARTINEZ PINTO identificado(a) con Cédula de ciudadanía Número 1024530679 El ciudadano no presenta antecedentes.");
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(attorneyOfficeNoReport, parameters, new JREmptyDataSource());
-
+        log.info("Procuraduria no jasper report has been created successful");
         return JasperExportManager.exportReportToPdf(jsonPrintDetail);
     }
 
@@ -204,8 +181,8 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
         document.close();
         outputStream.close();
-
         byte[] mergedPdfBytes = outputStream.toByteArray();
+        log.info("Consolited PDFs has been created.");
         return Base64.getEncoder().encodeToString(mergedPdfBytes);
     }
 
