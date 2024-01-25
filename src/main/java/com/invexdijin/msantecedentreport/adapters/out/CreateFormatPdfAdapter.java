@@ -13,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.util.JRSaver;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
+
 import java.io.*;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -138,7 +141,11 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         parameters.put("date", fullDate[0]);
         parameters.put("identification", policeAntecedentsResponse.getData().getDocumentNumber());
         parameters.put("full_name", policeAntecedentsResponse.getData().getFullName());
-        parameters.put("details_3",policeAntecedentsResponse.getData().getLegend());
+        if(policeAntecedentsResponse.getData().getLegend()==null){
+            parameters.put("details_3","Esta consulta es válida siempre y cuando el número de identificación y nombres, correspondan con el documento de identidad registrado y solo aplica para el territorio colombiano de acuerdo a lo establecido en el ordenamiento constitucional.");
+        }else{
+            parameters.put("details_3",policeAntecedentsResponse.getData().getLegend());
+        }
         parameters.put("details_4","Si tiene alguna duda con el resultado, consulte las preguntas frecuentes o acérquese a las\n" +
                 "instalaciones de la Policía Nacional más cercanas.");
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(policeReport, parameters, new JREmptyDataSource());
@@ -160,7 +167,7 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("date", strDate);
-        parameters.put("details", "Consulta en línea de Antecedentes Disciplinarios, La Procuraduria General de la Nacion certifica Que siendo las 16 horas del 02/10/2023 el Señor(a) JOHN ALEXANDER MARTINEZ PINTO identificado(a) con Cédula de ciudadanía Número 1024530679 El ciudadano no presenta antecedentes.");
+        parameters.put("details", disciplinaryAntecedentsResponse.getData().getLegend());
         JasperPrint jsonPrintDetail = JasperFillManager.fillReport(attorneyOfficeNoReport, parameters, new JREmptyDataSource());
         log.info("Procuraduria no jasper report has been created successful");
         return JasperExportManager.exportReportToPdf(jsonPrintDetail);
@@ -175,8 +182,10 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
         document.open();
 
         for (byte[] pdfBytes : pdfBytesArray) {
-            PdfReader reader = new PdfReader(pdfBytes);
-            copy.addDocument(reader);
+            if(!(pdfBytes.length ==0)){
+                PdfReader reader = new PdfReader(pdfBytes);
+                copy.addDocument(reader);
+            }
         }
 
         document.close();

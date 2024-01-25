@@ -5,10 +5,8 @@ import com.invexdijin.msantecedentreport.application.core.domain.response.antece
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-/*@FeignClient(value = "email",
-        url = "http://email-notification:80")*/
 @FeignClient(value = "email",
-        url = "http://localhost:8084")
+        url = "${feign.email.url}")
 public interface EmailNotificationClient {
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/invexdijin/pdf")
     ApiResponse sendPdfByEmail(@RequestBody RequestPdfEmail requestPdfEmail);

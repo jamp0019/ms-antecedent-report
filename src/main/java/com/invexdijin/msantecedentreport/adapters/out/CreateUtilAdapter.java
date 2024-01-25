@@ -24,8 +24,13 @@ public class CreateUtilAdapter implements CreateUtilOutputPort {
         consolidatedResponse.setFullName(requestSearch.getSearchFullName());
         consolidatedResponse.setFirstName(requestSearch.getSearchName());
         consolidatedResponse.setLastName(requestSearch.getSearchLastName());
-        consolidatedResponse.setDocumentType(apiResponse.getData().getDocumentType());
-        consolidatedResponse.setDocumentNumber(apiResponse.getData().getDocumentNumber());
+        if(!(apiResponse == null)){
+            consolidatedResponse.setDocumentType(apiResponse.getData().getDocumentType());
+            consolidatedResponse.setDocumentNumber(apiResponse.getData().getDocumentNumber());
+        }else{
+            consolidatedResponse.setDocumentType("No hay información");
+            consolidatedResponse.setDocumentNumber("No hay información");
+        }
         return consolidatedResponse;
     }
 }
