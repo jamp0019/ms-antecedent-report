@@ -8,6 +8,7 @@ import com.invexdijin.msantecedentreport.application.core.domain.request.Request
 import com.invexdijin.msantecedentreport.application.core.domain.request.RequestPdfEmail;
 import com.invexdijin.msantecedentreport.application.core.domain.response.ConsolidatedResponse;
 import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
+import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.TokenRenew;
 import com.invexdijin.msantecedentreport.application.core.domain.response.searchperson.MapResponse;
 import com.invexdijin.msantecedentreport.application.ports.in.CreateReportInputPort;
 import com.invexdijin.msantecedentreport.application.ports.out.CreateFormatPdfOutputPort;
@@ -47,6 +48,13 @@ public class CreateReportUseCase implements CreateReportInputPort {
     private String mapsKey;
     @Override
     public ConsolidatedResponse generateAntecedentReport(RequestSearch requestSearch) throws Exception {
+
+        try{
+            TokenRenew tokenRenew = antecedentReportClient.renewToken(verifikToken);
+            verifikToken = "Bearer "+tokenRenew.getAccessToken();
+        }catch (Exception ex){
+            log.error("Failed request to token renew service");
+        }
 
         byte[] base64Decoder = new byte[0];
         ApiResponse publicSpendingWatchdogResponse;
@@ -115,11 +123,19 @@ public class CreateReportUseCase implements CreateReportInputPort {
         }
         consolidatedResponse.setPublicSpendingWatchdogMessage("La contraloría delegada para responsabilidad fiscal, intervención judicial y cobro coactivo. Ver detalle en pdf adjunto.");
         //log.info("Generated PDF --> "+consolidatedBase64Report);
+        log.info(consolidatedResponse.toString());
         return consolidatedResponse;
     }
 
     @Override
     public ConsolidatedResponse generateSearchPersonReport(RequestSearch requestSearch) throws Exception {
+
+        try{
+            TokenRenew tokenRenew = antecedentReportClient.renewToken(verifikToken);
+            verifikToken = "Bearer "+tokenRenew.getAccessToken();
+        }catch (Exception ex){
+            log.error("Failed request to token renew service");
+        }
 
         byte[] bytesPersonVotingResponse = new byte[0];
         ApiResponse personVotingResponse = null;
@@ -154,12 +170,14 @@ public class CreateReportUseCase implements CreateReportInputPort {
             consolidatedResponse.setDepartment(personVotingResponse.getData().getDepartment());
             consolidatedResponse.setMunicipality(personVotingResponse.getData().getMunicipality());
             consolidatedResponse.setGeometry(mapResponse.getResults().get(0).getGeometry());
+            log.info(mapResponse.toString());
         }else{
             consolidatedResponse.setAddress("No hay información");
             consolidatedResponse.setDepartment("No hay información");
             consolidatedResponse.setMunicipality("No hay información");
             consolidatedResponse.setGeometry(null);
         }
+        log.info(consolidatedResponse.toString());
         return consolidatedResponse;
     }
 

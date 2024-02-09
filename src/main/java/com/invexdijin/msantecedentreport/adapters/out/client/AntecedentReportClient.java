@@ -1,6 +1,7 @@
 package com.invexdijin.msantecedentreport.adapters.out.client;
 
 import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.ApiResponse;
+import com.invexdijin.msantecedentreport.application.core.domain.response.antecedents.TokenRenew;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +24,7 @@ public interface AntecedentReportClient {
                                                              @RequestParam("documentType") String documentType,
                                                              @RequestParam("documentNumber") String documentNumber);
 
+    @RequestMapping(method = RequestMethod.POST, value = "/v2/auth/session")
+    TokenRenew renewToken(@RequestHeader("Authorization") String bearerToken);
 
 }
