@@ -98,7 +98,11 @@ public class CreateReportUseCase implements CreateReportInputPort {
             log.error(" Can´t create report Policia: {}", ex.getMessage());
         }
 
-        byte[] bytesMainResponse = createFormatPdfOutputPort.createMainReport(requestSearch.getPaymentName(), requestSearch.getPaymentEmail());
+        byte[] bytesMainResponse = createFormatPdfOutputPort.createMainAntecedentReport(requestSearch.getPaymentName(), requestSearch.getPaymentEmail());
+
+        /*String consolidatedBase64Report = createFormatPdfOutputPort.mergePdfAndReturnBase64(
+                bytesMainResponse,
+                bytesPoliceAntecedentsResponse);*/
 
         String consolidatedBase64Report = createFormatPdfOutputPort.mergePdfAndReturnBase64(
                 bytesMainResponse,
@@ -133,6 +137,8 @@ public class CreateReportUseCase implements CreateReportInputPort {
         try{
             TokenRenew tokenRenew = antecedentReportClient.renewToken(verifikToken);
             verifikToken = "Bearer "+tokenRenew.getAccessToken();
+            log.info(verifikToken);
+            log.info("Token updated successfully");
         }catch (Exception ex){
             log.error("Failed request to token renew service");
         }
@@ -159,6 +165,7 @@ public class CreateReportUseCase implements CreateReportInputPort {
                 bytesPersonVotingResponse);
         RequestPdfEmail requestPdfEmail = createUtilOutputPort.createRequestPdfEmail(requestSearch.getPaymentName(),requestSearch.getPaymentEmail(), consolidatedBase64Report);
         emailNotificationClient.sendPdfByEmail(requestPdfEmail);
+        log.info("Email sent successfully");
         ConsolidatedResponse consolidatedResponse;
         consolidatedResponse = createUtilOutputPort.createConsolidatedResponse(personVotingResponse, requestSearch);
         if(!(personVotingResponse==null)){

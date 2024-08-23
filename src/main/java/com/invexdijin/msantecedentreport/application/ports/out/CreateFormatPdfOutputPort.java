@@ -13,6 +13,8 @@ public interface CreateFormatPdfOutputPort {
 
     byte[] createMainReport(String addresseeName, String addresseeEmail) throws Exception;
 
+    byte[] createMainAntecedentReport(String addresseeName, String addresseeEmail) throws Exception;
+
     byte[] createAttorneyOfficeReport(ApiResponse publicSpendingWatchdogResponse) throws JRException;
 
     byte[] createPoliceReport(ApiResponse policeAntecedentsResponse) throws JRException;

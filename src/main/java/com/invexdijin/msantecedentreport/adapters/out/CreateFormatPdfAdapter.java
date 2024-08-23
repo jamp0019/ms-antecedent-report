@@ -13,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JsonDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sf.jasperreports.engine.util.JRSaver;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.text.DateFormatSymbols;
@@ -29,34 +27,46 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
     @Override
     public byte[] createMainReport(String addresseeName, String addresseeEmail) throws Exception {
 
+
         /*try {
+            JasperReport mainJasperReport;
+            log.info("Creating MainReport.jasper");
+            File file0 = ResourceUtils.getFile("classpath:MainReport.jrxml");
+            mainJasperReport = JasperCompileManager.compileReport(file0.getAbsolutePath());
+            JRSaver.saveObject(mainJasperReport, "MainReport.jasper");
+            log.info("Creation success!!!");
+
+            JasperReport policeJasperReport;
             log.info("Creating PoliciaReport.jasper");
             File file = ResourceUtils.getFile("classpath:PoliciaReport.jrxml");
-            mainJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-            JRSaver.saveObject(mainJasperReport, "PoliciaReport.jasper");
+            policeJasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+            JRSaver.saveObject(policeJasperReport, "PoliciaReport.jasper");
             log.info("Creation success!!!");
 
-            log.info("Creating ProcuraduriaNoReport.jrxml");
+            JasperReport proNoJasperReport;
+            log.info("Creating ProcuraduriaNoReport.jasper");
             File file1 = ResourceUtils.getFile("classpath:ProcuraduriaNoReport.jrxml");
-            mainJasperReport = JasperCompileManager.compileReport(file1.getAbsolutePath());
-            JRSaver.saveObject(mainJasperReport, "ProcuraduriaNoReport.jasper");
+            proNoJasperReport = JasperCompileManager.compileReport(file1.getAbsolutePath());
+            JRSaver.saveObject(proNoJasperReport, "ProcuraduriaNoReport.jasper");
             log.info("Creation success!!!");
 
-            log.info("Creating ProcuraduriaReport.jrxml");
+            JasperReport proYesJasperReport;
+            log.info("Creating ProcuraduriaReport.jasper");
             File file2 = ResourceUtils.getFile("classpath:ProcuraduriaReport.jrxml");
-            mainJasperReport = JasperCompileManager.compileReport(file2.getAbsolutePath());
-            JRSaver.saveObject(mainJasperReport, "ProcuraduriaReport.jasper");
+            proYesJasperReport = JasperCompileManager.compileReport(file2.getAbsolutePath());
+            JRSaver.saveObject(proYesJasperReport, "ProcuraduriaReport.jasper");
             log.info("Creation success!!!");
 
-            log.info("Creating SearchReport.jrxml");
+            JasperReport searchJasperReport;
+            log.info("Creating SearchReport.jasper");
             File file3 = ResourceUtils.getFile("classpath:SearchReport.jrxml");
-            mainJasperReport = JasperCompileManager.compileReport(file3.getAbsolutePath());
-            JRSaver.saveObject(mainJasperReport, "SearchReport.jasper");
+            searchJasperReport = JasperCompileManager.compileReport(file3.getAbsolutePath());
+            JRSaver.saveObject(searchJasperReport, "SearchReport.jasper");
             log.info("Creation success!!!");
 
-            mainJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/MainReport.jasper")));
+            mainJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/static/MainReport.jasper")));
         } catch (JRException e) {
-            log.error("MainReport.jasper no exist!!!");
+            *//*log.error("MainReport.jasper no exist!!!");
             try {
                 log.info("Creating MainReport.jasper");
                 File file = ResourceUtils.getFile("classpath:MainReport.jrxml");
@@ -66,10 +76,24 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
             } catch (FileNotFoundException | JRException ex) {
                 log.error("No can't open or create MainReport.jasper");
                 throw new RuntimeException(e);
-            }
-        }*/
+            }*//*
+        }
+        return null;*/
         JasperReport mainJasperReport;
         mainJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/MainReport.jasper")));
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name_addressee", addresseeName);
+        parameters.put("email", addresseeEmail);
+
+        JasperPrint mainJasperPrint = JasperFillManager.fillReport(mainJasperReport, parameters, new JREmptyDataSource());
+        log.info("Jasper report main has been created successful");
+        return JasperExportManager.exportReportToPdf(mainJasperPrint);
+    }
+
+    @Override
+    public byte[] createMainAntecedentReport(String addresseeName, String addresseeEmail) throws Exception {
+        JasperReport mainJasperReport;
+        mainJasperReport = (JasperReport) JRLoader.loadObject(Objects.requireNonNull(getClass().getResource("/jasper/MainAntecedentReport.jasper")));
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name_addressee", addresseeName);
         parameters.put("email", addresseeEmail);
@@ -131,14 +155,17 @@ public class CreateFormatPdfAdapter implements CreateFormatPdfOutputPort {
 
         Map<String, Object> parameters = new HashMap<>();
         if(details.length==1){
-            parameters.put("details_1", details[0]);
-            parameters.put("details_2", " ");
+            /*parameters.put("details_1", details[0]);
+            parameters.put("details_2", " ");*/
+            parameters.put("details_1", "");
+            parameters.put("details_2", details[0]);
         }else{
             parameters.put("details_1", details[0]);
             parameters.put("details_2", details[1]+"\n\n"+details[3]);
         }
-        parameters.put("hour", fullDate[1]+" "+fullDate[2]);
-        parameters.put("date", fullDate[0]);
+        parameters.put("hour", "Que siendo las "+fullDate[1]+" "+fullDate[2]+ " horas del "+ fullDate[0]+", el ciudadano identificado con:");
+        /*parameters.put("hour", fullDate[1]+" "+fullDate[2]);
+        parameters.put("date", fullDate[0]);*/
         parameters.put("identification", policeAntecedentsResponse.getData().getDocumentNumber());
         parameters.put("full_name", policeAntecedentsResponse.getData().getFullName());
         if(policeAntecedentsResponse.getData().getLegend()==null){

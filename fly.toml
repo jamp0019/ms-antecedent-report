@@ -1,29 +1,29 @@
-# fly.toml app configuration file generated for ms-antecedent-report-v1 on 2024-02-05T12:04:04-05:00
+# fly.toml app configuration file generated for ms-antecedent-report-v1 on 2024-08-01T16:43:09-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "ms-antecedent-report-v1"
-primary_region = "bog"
+app = 'ms-antecedent-report-v1'
+primary_region = 'bog'
 
 [build]
-  image = "jamp1992/ms-antecedent-report:v6"
+  image = 'jamp1992/ms-antecedent-report:v13'
 
 [env]
-  CLIENT_GOOGLE_MAPS_KEY = "AIzaSyDK231ZhYFjHQejxsFHnzuf8xUBiDezOtQ"
-  CLIENT_GOOGLE_MAPS_URL = "https://maps.googleapis.com/maps/api/geocode/json"
-  FEIGN_EMAIL_URL = "http://ms-email-notification-v1.internal:8080"
-  TOKEN_VERIFIK = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0NTkwMzM0MWYzMTBiZGY4ZTU4NGI0ZCIsInYiOjIsInJvbGUiOiJjbGllbnQiLCJKV1RQaHJhc2UiOiI2NDU5MDMzMjIyNGU0MmRmYjA2NzlmZGUiLCJleHBpcmVzQXQiOiIyMDI0LTAzLTEwIDIyOjQ5OjA3IiwiaWF0IjoxNzA3NTE4OTQ3fQ.ZrW7HIBN4FT84XBf6aVVzq9SpOe1N7_T9DRimWJTSYI"
+  CLIENT_GOOGLE_MAPS_KEY = 'AIzaSyBLoEBdTUeJ7HDL0KoNflabmaHz3gu1v1w'
+  CLIENT_GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
+  FEIGN_EMAIL_URL = 'http://ms-email-notification-v1.internal:8080'
+  TOKEN_VERIFIK = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0NjU3ZDBmOWY1YjM1MTI5N2Y2ZDhjZSIsIkpXVFBocmFzZSI6IjY0NjU3ZDBjNmRjNDY4MTI3OTNjNzcyMCIsImV4cGlyZXNBdCI6MTcyNTIyNjMwOCwiaWF0IjoxNzIyNTQ3OTA4fQ.-i-8vP7gIYcP62dJ_hbPTa7NVpmoB-jXRamxy6drt64'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = 'off'
   auto_start_machines = false
   min_machines_running = 1
-  processes = ["app"]
+  processes = ['app']
 
 [[vm]]
-  cpu_kind = "shared"
+  memory = '512mb'
+  cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 512

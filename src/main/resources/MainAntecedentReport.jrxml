@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invexdijinreport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="320b4245-acaa-4bef-bb41-96a3855d0be2">
+    <parameter name="email" class="java.lang.String" isForPrompting="false"/>
+    <parameter name="name_addressee" class="java.lang.String"/>
+    <pageHeader>
+        <band height="223">
+            <image>
+                <reportElement x="-20" y="-20" width="595" height="243" uuid="7c12638b-eccb-412c-9050-e7a8df4d6ebb"/>
+                <imageExpression><![CDATA[getClass().getResource("/img/header.png")]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="43" y="153" width="188" height="70" forecolor="#FCF7F7" uuid="dc47786d-4212-49a5-95c1-9244c9dcb461"/>
+                <text><![CDATA[IV INVEXDIJIN SAS NIT 901805130-3
+www.invexdijin.com
+consultas@invexdijin.com
++57 302 259 90 90
+Bogotá D.C. – Colombia]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="524" splitType="Stretch">
+            <image>
+                <reportElement x="-10" y="0" width="555" height="524" uuid="d71c5762-1425-4daa-a345-8345d17b7f65"/>
+                <imageExpression><![CDATA[getClass().getResource("/img/slogan.png")]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="43" y="86" width="477" height="170" uuid="ebb9d7ce-0aca-4c15-b2f4-48ca00a5d176"/>
+                <textElement textAlignment="Justified"/>
+                <text><![CDATA[Estimado
+
+IV INVEXIJIN SAS se encarga mediante una aplicación de gestionar una solución web para obtener con una sola consulta en las páginas oficiales del estado colombiano el consolidado de los resultados para los antecedentes penales que expide la Policía Nacional de Colombia, antecedentes disciplinarios de la Procuraduría General de la Nación y antecedentes de la Contraloría General de la República, IV INVEXIJIN SAS no cobra un precio por la entrega de información gratuita alojada en la Web, sino por su capacidad de recolectarla, procesarla y presentarla  en los distintos productos documentales. Si usted requiere antecedentes mas especializados como Investigaciones en curso, consulta de inhabilidades por delitos sexuales o procesos contravencionales comuníquese con nosotros y así poder brindarle una asesoría profesional.
+
+Un cordial saludo,]]></text>
+            </staticText>
+            <image>
+                <reportElement x="43" y="438" width="70" height="80" uuid="fe8d5192-4567-4222-8598-501ede689004"/>
+                <imageExpression><![CDATA[getClass().getResource("/img/LogoBottom.jpeg")]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement x="43" y="423" width="100" height="30" uuid="42c6387c-5274-42a2-aa4c-3ee6edc47db7"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <text><![CDATA[INVEXDIJIN]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="41" y="17" width="339" height="17" uuid="e2e58240-be9c-4713-a22a-83b9e7818a19"/>
+                <textElement>
+                    <font isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{name_addressee}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="41" y="34" width="339" height="20" uuid="b06db351-a50e-40ab-8267-472d4b1e61f7"/>
+                <textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="88" y="86" width="292" height="17" uuid="55b7066a-956c-4361-95b0-71a9746da732"/>
+                <textFieldExpression><![CDATA[$P{name_addressee}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="43" y="270" width="477" height="170" uuid="a31ba0e1-1eb6-4418-9d29-eedcbc0e15e8"/>
+                <textElement textAlignment="Justified"/>
+                <text><![CDATA[Dear
+
+Invexdijin is responsible for managing a web solution through an application to obtain, with a single query on the official websites of the Colombian state, the consolidated results for criminal records issued by the National Police of Colombia, disciplinary records certificate from the Office of the Attorney General of the Nation, and the certificate of records from the Office of the Comptroller General of the Republic. If you require more specialized records such as ongoing investigations, inquiries into disqualifications for sexual offenses, or misdemeanor processes, please contact us to provide you with professional advice.]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="83" y="271" width="297" height="17" uuid="bcff0c5f-c6fb-42f3-9b40-c0b2064577d1"/>
+                <textFieldExpression><![CDATA[$P{name_addressee}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="22" splitType="Stretch"/>
+    </pageFooter>
+</jasperReport>

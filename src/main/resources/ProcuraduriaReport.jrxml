@@ -142,7 +142,7 @@
         <band height="645" splitType="Stretch">
             <image hAlign="Center" vAlign="Middle">
                 <reportElement x="-10" y="200" width="556" height="440" uuid="0eb83054-c5ca-44c0-a3d3-2a4248eeeba3"/>
-                <imageExpression><![CDATA[getClass().getResource("/img/MarkWater.png")]]></imageExpression>
+                <imageExpression><![CDATA[getClass().getResource("/img/slogan.png")]]></imageExpression>
             </image>
         </band>
     </background>
@@ -153,12 +153,12 @@
                 <imageExpression><![CDATA[getClass().getResource("/img/header.png")]]></imageExpression>
             </image>
             <staticText>
-                <reportElement x="52" y="153" width="150" height="70" forecolor="#FCF7F7" uuid="c67b2d27-3de4-484c-82fb-ace94b6b3c6b"/>
-                <text><![CDATA[INVEXDIJIN
-Bogotá – Colombia
+                <reportElement x="43" y="153" width="188" height="70" forecolor="#FCF7F7" uuid="dc47786d-4212-49a5-95c1-9244c9dcb461"/>
+                <text><![CDATA[IV INVEXDIJIN SAS NIT 901805130-3
+www.invexdijin.com
+consultas@invexdijin.com
 +57 302 259 90 90
-invexdijin@consultas.com
-www.invexdijin.com]]></text>
+Bogotá D.C. – Colombia]]></text>
             </staticText>
         </band>
     </pageHeader>
