@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for ms-antecedent-report-v1 on 2024-08-01T16:43:09-05:00
+# fly.toml app configuration file generated for ms-antecedent-report-v1 on 2024-08-23T09:47:50-05:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,13 +7,13 @@ app = 'ms-antecedent-report-v1'
 primary_region = 'bog'
 
 [build]
-  image = 'jamp1992/ms-antecedent-report:v13'
+  image = 'jamp1992/ms-antecedent-report:v16'
 
 [env]
   CLIENT_GOOGLE_MAPS_KEY = 'AIzaSyBLoEBdTUeJ7HDL0KoNflabmaHz3gu1v1w'
   CLIENT_GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
   FEIGN_EMAIL_URL = 'http://ms-email-notification-v1.internal:8080'
-  TOKEN_VERIFIK = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0NjU3ZDBmOWY1YjM1MTI5N2Y2ZDhjZSIsIkpXVFBocmFzZSI6IjY0NjU3ZDBjNmRjNDY4MTI3OTNjNzcyMCIsImV4cGlyZXNBdCI6MTcyNTIyNjMwOCwiaWF0IjoxNzIyNTQ3OTA4fQ.-i-8vP7gIYcP62dJ_hbPTa7NVpmoB-jXRamxy6drt64'
+  TOKEN_VERIFIK = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY0NjU3ZDBmOWY1YjM1MTI5N2Y2ZDhjZSIsIkpXVFBocmFzZSI6IjY0NjU3ZDBjNmRjNDY4MTI3OTNjNzcyMCIsImV4cGlyZXNBdCI6MTcyNzEwMjcwMiwiaWF0IjoxNzI0NDI0MzAyfQ.LnQsBWc1Sj-_Yd-54yctT6iBQeWjnnAqPtiQ72b8yAY'
 
 [http_service]
   internal_port = 8080
